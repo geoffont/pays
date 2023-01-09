@@ -1,41 +1,44 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "./Card";
-import Select from "react-select";
-
+import React, { useState, useEffect } from "react";
 const Country = () => {
+  const [data, setData] = useState([]);
+  const [selectRegion, setSelectRegion] = useState("");
+ console.log(selectRegion, 'mappage')
   const continent = [
-    { value: "europe", label: "europe" },
-    { value: "afrique", label: "afrique" },
-    { value: "amerique", label: "amerique" },
-    { value: "asie", label: "asie" },
-    { value: "oceanie", label: "oceanie" },
+    "",
+    "Europe",
+    "Africa",
+    "Americas",
+    "Asia",
+    "Oceania",
   ];
-  const [data, setdata] = useState([]);
   useEffect(() => {
     axios
       .get("https://restcountries.com/v3.1/all")
-      .then((res) => setdata(res.data));
+      .then((res) => setData(res.data));
   }, []);
+  console.log(data)
   return (
-    <div>
-      
-<select>
-        <option>--Select--</option>
-        <option>europe</option>
-        <option>afrique</option>
-        <option>amerique</option>
-        <option>asie</option>
-        <option>oceanie</option>
-    </select>
-      <h1>Countries</h1>
-      <ul>
-        {data.map((country, index) => (
-          <Card key={index} country={country} />
+    <div className="pays">
+      <select
+            onChange={(e) => setSelectRegion(e.target.value)}
+            >
+            {continent.map((item, index) => (
+            <option key={index}
+            value={item}>
+            {item}
+          </option>
         ))}
+      </select>
+      <ul>
+        {data
+          .filter((country) => !data ? (""): (country.region.includes(selectRegion)))
+          .map((country, index) => (
+            <Card key={index} country={country} />
+          ))}
       </ul>
     </div>
   );
 };
-
 export default Country;
