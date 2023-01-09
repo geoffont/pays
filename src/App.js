@@ -1,4 +1,4 @@
-import react from 'react';
+
 import './App.css';
 import Country from './components/Country';
 
