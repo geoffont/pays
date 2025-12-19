@@ -5,7 +5,7 @@ import Country from './components/Country';
 function App() {
   return (
     <div className="App">
-      <h1>Select country</h1>
+      <h1>Pays du Monde</h1>
       <Country />
     </div>
   );
